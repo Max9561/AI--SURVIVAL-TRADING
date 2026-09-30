@@ -1,1 +1,8 @@
+xgboost
+lightgbm
+joblib
+optuna
 
+ollama
+transformers
+sentence-transformers
