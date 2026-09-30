@@ -1,0 +1,68 @@
+from dataclasses import dataclass
+
+
+@dataclass
+class RiskDecision:
+    approved: bool
+        reason: str
+
+
+        class RiskEngine:
+
+            def __init__(
+                    self,
+                            max_risk_per_trade: float = 0.005,
+                                    max_daily_loss: float = 0.02,
+                                            max_drawdown: float = 0.10,
+                                                ):
+                                                        self.max_risk_per_trade = max_risk_per_trade
+                                                                self.max_daily_loss = max_daily_loss
+                                                                        self.max_drawdown = max_drawdown
+
+                                                                            def approve(
+                                                                                    self,
+                                                                                            risk_fraction: float,
+                                                                                                    daily_loss_fraction: float,
+                                                                                                            drawdown_fraction: float,
+                                                                                                                ) -> RiskDecision:
+
+                                                                                                                        if risk_fraction < 0:
+                                                                                                                                    return RiskDecision(
+                                                                                                                                                    False,
+                                                                                                                                                                    "Risk fraction cannot be negative.",
+                                                                                                                                                                                )
+
+                                                                                                                                                                                        if daily_loss_fraction < 0:
+                                                                                                                                                                                                    return RiskDecision(
+                                                                                                                                                                                                                    False,
+                                                                                                                                                                                                                                    "Daily loss fraction cannot be negative.",
+                                                                                                                                                                                                                                                )
+
+                                                                                                                                                                                                                                                        if drawdown_fraction < 0:
+                                                                                                                                                                                                                                                                    return RiskDecision(
+                                                                                                                                                                                                                                                                                    False,
+                                                                                                                                                                                                                                                                                                    "Drawdown fraction cannot be negative.",
+                                                                                                                                                                                                                                                                                                                )
+
+                                                                                                                                                                                                                                                                                                                        if risk_fraction > self.max_risk_per_trade:
+                                                                                                                                                                                                                                                                                                                                    return RiskDecision(
+                                                                                                                                                                                                                                                                                                                                                    False,
+                                                                                                                                                                                                                                                                                                                                                                    "Trade risk exceeds configured limit.",
+                                                                                                                                                                                                                                                                                                                                                                                )
+
+                                                                                                                                                                                                                                                                                                                                                                                        if daily_loss_fraction >= self.max_daily_loss:
+                                                                                                                                                                                                                                                                                                                                                                                                    return RiskDecision(
+                                                                                                                                                                                                                                                                                                                                                                                                                    False,
+                                                                                                                                                                                                                                                                                                                                                                                                                                    "Daily loss limit reached.",
+                                                                                                                                                                                                                                                                                                                                                                                                                                                )
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                        if drawdown_fraction >= self.max_drawdown:
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                    return RiskDecision(
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    False,
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    "Maximum drawdown reached.",
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                )
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        return RiskDecision(
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    True,
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                "Risk conditions satisfied.",
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        )
