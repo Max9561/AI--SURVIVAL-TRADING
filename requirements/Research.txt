@@ -1,1 +1,6 @@
+jupyterlab
+ipykernel
 
+openpyxl
+jinja2
+reportlab
