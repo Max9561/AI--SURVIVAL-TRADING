@@ -1,1 +1,24 @@
+pandas
+numpy
+scipy
+pandas-ta
 
+matplotlib
+plotly
+
+scikit-learn
+
+fastapi
+uvicorn
+pydantic
+pydantic-settings
+
+SQLAlchemy
+aiosqlite
+
+httpx
+requests
+websockets
+
+python-dotenv
+python-dateutil
